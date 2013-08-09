@@ -62,8 +62,8 @@ public class Point {
 		z = z / radius;
 
 		// http://en.wikipedia.org/wiki/Spherical_coordinate_system#Coordinate_system_conversions
-		m_theta = Math.tanh(z/Math.sqrt(x*x + y*y));
-		m_phi = Math.tanh(y/x);
+		m_theta = Math.acos(z);
+		m_phi = Math.atan(y/x);
 	}
 
 	/**
@@ -90,6 +90,14 @@ public class Point {
 
 	public double z() {
 		return Math.cos(m_theta);
+	}
+	
+	public void display() {
+		String result = "(" + Double.toString(x()) +
+						", " + Double.toString(y()) +
+						", " + Double.toString(z()) +
+						")\n";
+		System.out.println(result);
 	}
 	
 	// Returns the midpoint of this point and a second point.
