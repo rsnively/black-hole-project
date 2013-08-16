@@ -1,5 +1,7 @@
 package blackhole;
 
+import java.util.ArrayList;
+
 /**
  * Physical massive points that we'll use to build machines, sort of like
  * white connectors in K'Nex. Unlike white connectors, they are infinitesimally
@@ -17,6 +19,9 @@ public class Anchor {
 	// negative mass, so we won't be constraining this value at all.
 	private double m_mass;
 	
+	// A list of the rods to which this anchor serves as an endpoint.
+	private ArrayList<Rod> m_rods;
+	
 	/**
 	 * Constructors
 	 */
@@ -26,12 +31,14 @@ public class Anchor {
 	public Anchor() {
 		m_loc = new Point();
 		m_mass = 0;
+		m_rods = new ArrayList<Rod>();
 	}
 	
 	// Copy constructor: create one anchor from another.
 	public Anchor(Anchor other) {
 		m_loc = other.m_loc;
 		m_mass = other.m_mass;
+		m_rods = new ArrayList<Rod>(other.m_rods);
 	}
 	
 	// Standard constructor: create an anchor with specified location and
@@ -41,6 +48,7 @@ public class Anchor {
 		// normalize anything.
 		m_loc = loc;
 		m_mass = mass;
+		m_rods = new ArrayList<Rod>();
 	}
 	
 	// Standard constructor (given the point in spherical coordinates).
@@ -48,6 +56,7 @@ public class Anchor {
 		// We'll use the point constructor to normalize the coordinates.
 		m_loc = new Point(theta, phi);
 		m_mass = mass;
+		m_rods = new ArrayList<Rod>();
 		
 	}
 	
@@ -56,6 +65,7 @@ public class Anchor {
 		// We'll use the point constructor to normalize the coordinates.
 		m_loc = new Point(x, y, z);
 		m_mass = mass;
+		m_rods = new ArrayList<Rod>();
 	}
 	
 	
@@ -73,6 +83,11 @@ public class Anchor {
 		return m_mass;
 	}
 	
+	// Get the rods to which this anchor is connected.
+	public ArrayList<Rod> rods() {
+		return m_rods;
+	}
+	
 	/**
 	 * Mutators
 	 */
@@ -86,5 +101,26 @@ public class Anchor {
 	// Change the mass of the anchor.
 	public void resize(double mass) {
 		m_mass = mass;
+	}
+	
+	// Add a rod to the connectivity list.
+	public void add(Rod r) {
+		m_rods.add(r);
+	}
+	
+	// Removes rod at index n from connectivity list.
+	// Returns true if rod was removed, false if index is out of bounds.
+	public boolean remove(int n) {
+		if (n < 0 || n >= m_rods.size()) {
+			return false;
+		}
+		m_rods.remove(n);
+		return true;
+	}
+	
+	// Remove a rod from the connectivity list.
+	// Returns true if object is found, false otherwise.
+	public boolean remove(Rod r) {
+		return m_rods.remove(r);
 	}
 }
