@@ -53,17 +53,41 @@ public class Point {
 
 	// Rectangular coordinate constructor.
 	public Point(double x, double y, double z) {
-
+		
+		// The only point which can truly screw us its the origin, so we'll
+		// return a point at the north pole.
+		if (Double.compare(x, 0) == 0 && 
+			Double.compare(y, 0) == 0 &&
+			Double.compare(z, 0) == 0) {
+			z = 1;
+		}
+		
 		// Make sure coordinates conform to unit sphere. If they do not,
 		// scale them accordingly.
-		double radius = Math.sqrt(x*x + y*y + z*z);
+		double radius = Math.sqrt(x*x + y*y + z*z);		
 		x = x / radius;
 		y = y / radius;
 		z = z / radius;
 
 		// http://en.wikipedia.org/wiki/Spherical_coordinate_system#Coordinate_system_conversions
 		m_theta = Math.acos(z);
-		m_phi = Math.atan(y/x);
+		
+		// We could run into a couple problems with phi when x = 0.
+		if (Double.compare(x, 0) == 0) {
+			switch (Double.compare(y, 0)) {
+				// If x is 0 and y is negative, we are at phi = -pi/2
+				case -1: m_phi = 3.0 * Math.PI / 2.0; break;
+				// If both x and y are 0, we are at a pole, and it makes sense
+				// to set phi to 0.
+				case 0: m_phi = 0; break;
+				// If x is 0 and y is positive, we are at phi = pi/2
+				case 1: m_phi = Math.PI / 2.0; break;
+				default: break;
+			}
+		}
+		else {
+			m_phi = Math.atan(y/x);
+		}
 	}
 
 	/**
@@ -109,7 +133,9 @@ public class Point {
 		
 		// If points are directly across from one another...
 		// Gonna return the top of the sphere, for now...
-		if (x_avg == 0 && y_avg == 0 && z_avg == 0) {
+		if (Double.compare(x_avg, 0) == 0 &&
+		    Double.compare(y_avg, 0) == 0 &&
+		    Double.compare(z_avg, 0) == 0) {
 			return new Point();
 		}
 		
@@ -140,29 +166,29 @@ public class Point {
 		
 		// If we are given a negative theta value, invert it and add
 		// pi to phi.
-		if (m_theta < 0) {
+		if (Double.compare(m_theta, 0) == -1) {
 			m_theta *= -1;
 			m_phi += Math.PI;
 		}
 		// If a theta is given that is greater than pi, scale it back.
-		while (m_theta > Math.PI) {
+		while (Double.compare(m_theta,  Math.PI) == 1) {
 			m_theta -= (2 * Math.PI);
 		}
 		// This may have made a previously positive value negative, so
 		// check again.
-		if (m_theta < 0) {
+		if (Double.compare(m_theta, 0) == -1) {
 			m_theta *= -1;
 			m_phi += Math.PI;
 		}
 
 		// If we are given a negative phi value, rotate by positive 2 pi
 		// until it is in the proper range.
-		while (m_phi < 0) {
+		while (Double.compare(m_phi, 0) == -1) {
 			m_phi += (2 * Math.PI);
 		}
 		// If we are given a phi value over 2 pi, rotate by negative 2 pi
 		// until it is in the proper range.
-		while (m_phi > 2 * Math.PI) {
+		while (Double.compare(m_phi, 2 * Math.PI) == 1) {
 			m_phi -= (2 * Math.PI);
 		}
 	}

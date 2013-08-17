@@ -45,9 +45,23 @@ public class BlackHole {
 		test(14, feq(p3.y(), 1), "Expected: p3.y() = 1\nActual: p3.y() = " + p3.y());
 		test(15, feq(p3.z(), 0), "Expected: p3.z() = 0\nActual: p3.z() = " + p3.z());
 		
-		
-		// Rectangular coordinate constructor (point on unit sphere).
-		Point p4 = new Point(1, 0, 0);
+		// Constructors on corner cases.
+		Point p4 = new Point(0,0,0); // Should redirect to north pole
+		test(16, feq(p4.theta(), 0), "Expected: p4.theta() = 0\nActual: p4.theta() = " + p4.theta());
+		test(17, feq(p4.phi(), 0), "Expected: p4.phi() = 0\nActual: p4.phi() = " + p4.phi());
+		test(18, feq(p4.x(), 0), "Expected: p4.x() = 0\nActual: p4.x() = " + p4.x());
+		test(19, feq(p4.y(), 0), "Expected: p4.y() = 0\nActual: p4.y() = " + p4.y());
+		test(20, feq(p4.z(), 1), "Expected: p4.z() = 1\nActual: p4.z() = " + p4.z());
+		Point p5 = new Point(Math.PI, 0); // South pole spherical
+		test(21, feq(p5.x(), 0), "Expected: p5.x() = 0\nActual: p5.x() = " + p4.x());
+		test(22, feq(p5.y(), 0), "Expected: p5.y() = 0\nActual: p5.y() = " + p4.y());
+		test(23, feq(p5.z(), -1), "Expected: p5.z() = -1\nActual: p5.z() = " + p5.z());
+		Point p6 = new Point(0, 0, -1); // South pole rectangular
+		test(24, feq(p6.theta(), Math.PI), "Expected: p6.theta() = pi\nActual: p6.theta() = " + p6.theta());
+		test(25, feq(p6.phi(), 0), "Expected: p6.phi() = 0\nActual: p6.phi() = " + p6.phi());
+		Point p7 = new Point(0,1,0); // Weird phi thing when x is 0
+		test(26, feq(p7.theta(), Math.PI / 2.0), "Expected p7.theta() = pi/2\nActual: p7.theta() = " + p7.theta());
+		test(27, feq(p7.phi(), Math.PI / 2.0), "Expected p7.phi() = pi/2\nActual: p7.phi() = " + p7.theta());
 		
 		if (m_failedtests > 0) {
 			System.out.println(m_failedtests + " of " + m_tests + " tests failed.");
