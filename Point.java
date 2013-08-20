@@ -117,26 +117,32 @@ public class Point {
 	}
 	
 	public void display() {
-		String result = "(" + Double.toString(x()) +
+		String r_crds = "(" + Double.toString(x()) +
 						", " + Double.toString(y()) +
 						", " + Double.toString(z()) +
 						")\n";
-		System.out.println(result);
+		String p_crds = "(" + Double.toString(m_theta / Math.PI) + " pi" +
+				        ", " + Double.toString(m_phi / Math.PI) + " pi" +
+				        ")\n";
+		System.out.println("Rectangular: " + r_crds + "Spherical: " + p_crds);
 	}
 	
 	// Returns the midpoint of this point and a second point.
 	public Point midpoint(Point p) {
 		
-		double x_avg = (x() + p.x() / 2.0);
-		double y_avg = (y() + p.y() / 2.0);
-		double z_avg = (z() + p.z() / 2.0);
+		double x_avg = (x() + p.x()) / 2.0;
+		double y_avg = (y() + p.y()) / 2.0;
+		double z_avg = (z() + p.z()) / 2.0;
 		
 		// If points are directly across from one another...
-		// Gonna return the top of the sphere, for now...
 		if (Double.compare(x_avg, 0) == 0 &&
 		    Double.compare(y_avg, 0) == 0 &&
 		    Double.compare(z_avg, 0) == 0) {
-			return new Point();
+			
+			// I guess, average the polar coordinate values and return that.
+			double theta_avg = (m_theta + p.theta()) / 2.0;
+			double phi_avg = (m_phi + p.phi()) / 2.0;
+			return new Point(theta_avg, phi_avg);
 		}
 		
 		// The point copy constructor normalizes these values for us.
@@ -167,29 +173,29 @@ public class Point {
 		// If we are given a negative theta value, invert it and add
 		// pi to phi.
 		if (Double.compare(m_theta, 0) == -1) {
-			m_theta *= -1;
+			m_theta *= -1.0;
 			m_phi += Math.PI;
 		}
 		// If a theta is given that is greater than pi, scale it back.
 		while (Double.compare(m_theta,  Math.PI) == 1) {
-			m_theta -= (2 * Math.PI);
+			m_theta -= (2.0 * Math.PI);
 		}
 		// This may have made a previously positive value negative, so
 		// check again.
 		if (Double.compare(m_theta, 0) == -1) {
-			m_theta *= -1;
+			m_theta *= -1.0;
 			m_phi += Math.PI;
 		}
 
 		// If we are given a negative phi value, rotate by positive 2 pi
 		// until it is in the proper range.
 		while (Double.compare(m_phi, 0) == -1) {
-			m_phi += (2 * Math.PI);
+			m_phi += (2.0 * Math.PI);
 		}
 		// If we are given a phi value over 2 pi, rotate by negative 2 pi
 		// until it is in the proper range.
-		while (Double.compare(m_phi, 2 * Math.PI) == 1) {
-			m_phi -= (2 * Math.PI);
+		while (Double.compare(m_phi, 2.0 * Math.PI) == 1) {
+			m_phi -= (2.0 * Math.PI);
 		}
 	}
 }
