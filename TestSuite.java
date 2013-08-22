@@ -140,14 +140,16 @@ public class TestSuite {
 		
 		// Midpoint testing
 		Point p8 = p4.midpoint(p5); // Midpoint of north and south pole
-		// Our current convention should place this at (theta = pi/2, phi = 0)
 		test(feq(p8.theta(), Math.PI / 2.0), "Expected: p8.theta() = pi/2\nActual: p8.theta() = " + p8.theta());
 		test(feq(p8.phi(), 0), "Expected: p8.phi() = 0\nActual: p8.phi() = " + p8.phi());
 		Point p9 = new Point(0,-1,0);
+		test(feq(p9.theta(), Math.PI / 2.0), "Expected: p9.theta() = pi/2nActual: p9.theta() = " + p9.theta());
+		test(feq(p9.phi(), 3.0 * Math.PI / 2.0), "Expected: p9.phi() = 3pi/2\nActual: p9.phi() = " + p9.phi());
 		Point p10 = p7.midpoint(p9);
 		test(feq(p10.theta(), Math.PI / 2.0), "Expected: p10.theta() = pi/2\nActual: p10.theta() = " + p10.theta());
 		test(feq(p10.phi(), Math.PI), "Expected: p10.phi() = pi\nActual: p10.phi() = " + p10.phi());
 		Point p11 = p10.midpoint(p9);
-		test(feq(p11.phi(), 7.0 * Math.PI / 4.0), "Expected: p11.phi() =7/4 pi\nActual: p11.phi() = " + p11.phi());
+		test(feq(p11.theta(), Math.PI / 2.0), "Expected p11.theta() = pi/2\nActual: p11.theta() = " + p11.theta());
+		test(feq(p11.phi(), 5.0 * Math.PI / 4.0), "Expected: p11.phi() = 5pi/4\nActual: p11.phi() = " + p11.phi() / Math.PI + "pi");
 	}
 }

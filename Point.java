@@ -86,7 +86,25 @@ public class Point {
 			}
 		}
 		else {
-			m_phi = Math.atan(y/x);
+			double tx = Math.tan(x);
+			double ty = Math.tan(y);
+			// Quadrant 1
+			if (tx > 0 && ty > 0) {
+				m_phi = Math.atan(y/x);
+			}
+			// Quadrant 2
+			else if (tx > 0 && ty < 0) {
+				m_phi = Math.atan(y/x) + Math.PI / 2.0;
+			}
+			// Quadrant 3
+			else if (tx < 0 && ty < 0) {
+				m_phi = Math.atan(y/x) + Math.PI;
+			}
+			// Quadrant 4
+			else
+			{
+				m_phi = Math.atan(y/x) + 3.0 * Math.PI / 2.0;
+			}
 		}
 	}
 
@@ -130,14 +148,16 @@ public class Point {
 	// Returns the midpoint of this point and a second point.
 	public Point midpoint(Point p) {
 		
+		TestSuite t = new TestSuite();
+		
 		double x_avg = (x() + p.x()) / 2.0;
 		double y_avg = (y() + p.y()) / 2.0;
 		double z_avg = (z() + p.z()) / 2.0;
 		
 		// If points are directly across from one another...
-		if (Double.compare(x_avg, 0) == 0 &&
-		    Double.compare(y_avg, 0) == 0 &&
-		    Double.compare(z_avg, 0) == 0) {
+		if (t.feq(x_avg, 0) &&
+		    t.feq(y_avg, 0) &&
+		    t.feq(z_avg, 0)) {
 			
 			// I guess, average the polar coordinate values and return that.
 			double theta_avg = (m_theta + p.theta()) / 2.0;
