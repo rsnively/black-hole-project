@@ -150,6 +150,11 @@ public class TestSuite {
 		test(feq(p10.phi(), Math.PI), "Expected: p10.phi() = pi\nActual: p10.phi() = " + p10.phi());
 		Point p11 = p10.midpoint(p9);
 		test(feq(p11.theta(), Math.PI / 2.0), "Expected p11.theta() = pi/2\nActual: p11.theta() = " + p11.theta());
-		test(feq(p11.phi(), 5.0 * Math.PI / 4.0), "Expected: p11.phi() = 5pi/4\nActual: p11.phi() = " + p11.phi() / Math.PI + "pi");
+		test(feq(p11.phi(), 5.0 * Math.PI / 4.0), "Expected: p11.phi() = 5pi/4\nActual: p11.phi() = " + p11.phi());
+		
+		// Rotation testing
+		p11.rotate(Math.PI/4.0, - Math.PI / 4.0);
+		test(feq(p11.theta(), 3.0 * Math.PI / 4.0), "Expected p11.theta() = 3pi/4\nActual: p11.theta() = " + p11.theta());
+		test(feq(p11.phi(), Math.PI), "Expected: p11.phi() = pi\nActual: p11.phi() = " + p11.phi());		
 	}
 }
