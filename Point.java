@@ -165,7 +165,7 @@ public class Point {
 			return new Point(theta_avg, phi_avg);
 		}
 		
-		// The point copy constructor normalizes these values for us.
+		// The point constructor normalizes these values for us.
 		return new Point(x_avg, y_avg, z_avg);
 	}
 
