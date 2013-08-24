@@ -16,7 +16,7 @@ public class BlackHole extends JFrame {
 	public static void main(String[] args) {
 		
 		new BlackHole();
-		//TestSuite t = new TestSuite();
-		//t.testAll();
+		TestSuite t = new TestSuite();
+		t.testAll();
 	}
 }

@@ -78,6 +78,26 @@ public class Anchor {
 		return m_loc;
 	}
 	
+	public double theta() {
+		return m_loc.theta();
+	}
+	
+	public double phi() {
+		return m_loc.phi();
+	}
+	
+	public double x() {
+		return m_loc.x();
+	}
+	
+	public double y() {
+		return m_loc.y();
+	}
+	
+	public double z() {
+		return m_loc.z();
+	}
+	
 	// Get the mass of the anchor.
 	public double mass() {
 		return m_mass;

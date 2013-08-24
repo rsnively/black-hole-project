@@ -85,6 +85,7 @@ public class TestSuite {
 	
 	public void testAll() {
 		pointTests();
+		anchorTests();
 		
 		if (m_failedtests > 0) {
 			System.out.println(m_failedtests + " of " + m_tests + " tests failed.");
@@ -156,5 +157,13 @@ public class TestSuite {
 		p11.rotate(Math.PI/4.0, - Math.PI / 4.0);
 		test(feq(p11.theta(), 3.0 * Math.PI / 4.0), "Expected p11.theta() = 3pi/4\nActual: p11.theta() = " + p11.theta());
 		test(feq(p11.phi(), Math.PI), "Expected: p11.phi() = pi\nActual: p11.phi() = " + p11.phi());		
+	}
+	
+	public void anchorTests() {
+		// Default constructor
+		Anchor a1 = new Anchor();
+		test(feq(a1.mass(), 0), "Expected: a1.mass() = 0\nActual: a1.mass() = " + a1.mass());
+		test(feq(a1.theta(), 0), "Expected: a1.theta() = 0\nActual: a1.theta() = " + a1.theta());
+		test(feq(a1.phi(), 0), "Expected: a1.phi() = 0\nActual: a1.phi() = " + a1.phi());
 	}
 }
